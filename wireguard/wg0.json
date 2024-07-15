@@ -4,5 +4,17 @@
     "publicKey": "fbxvC2xHVaQNHGrL1IKW7gJ/yrTR8+yrocD+J9brjCA=",
     "address": "10.8.0.1"
   },
-  "clients": {}
+  "clients": {
+    "d7538ef6-fcc0-451d-a19b-b300e7609e0c": {
+      "id": "d7538ef6-fcc0-451d-a19b-b300e7609e0c",
+      "name": "Eduin",
+      "address": "10.8.0.2",
+      "privateKey": "GFe824zJy8AbHcOx0wPpu8IOjpCz9msewGnBMbakn0U=",
+      "publicKey": "GD+GA2/+vyX9z1pCIFSqKnRwD6Yaomr1ZT1DqENvKhA=",
+      "preSharedKey": "2Gh4C8Fnwd1VWApJss6N4yQiyOMnxOXPfoUE6d9nHdw=",
+      "createdAt": "2024-07-15T17:15:44.886Z",
+      "updatedAt": "2024-07-15T17:15:44.886Z",
+      "enabled": true
+    }
+  }
 }
