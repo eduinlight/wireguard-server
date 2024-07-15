@@ -10,7 +10,7 @@ services:
       - PASSWORD=${WG_EASY_PASSWORD:-root}
       - WG_POST_UP=/etc/wireguard/postup.sh
       - WG_POST_DOWN=/etc/wireguard/postdown.sh
-      - MODE=DENY_ALLOW
+      - MODE=ALLOW_DENY
     restart: unless-stopped
     volumes:
       - ./wireguard:/etc/wireguard
