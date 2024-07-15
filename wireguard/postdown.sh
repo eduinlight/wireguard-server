@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# source /etc/wireguard/ips.sh
+source /etc/wireguard/ips.sh
 # source /etc/wireguard/common.sh
 
 SUBNET=10.8.0.0/24
@@ -22,13 +22,12 @@ else
   exit 1
 fi
 
-# for IP in ${IPS[@]}; do
-#   if [ $MODE == "ALLOW_DENY" ]; then
-#     iptables -D FORWARD -i $WG_INTERFACE -s $IP -j DROP
-#     iptables -D FORWARD -o $WG_INTERFACE -d $IP -j DROP
-#   else
-#     iptables -D FORWARD -i $WG_INTERFACE -s $IP -j ACCEPT
-#     iptables -D FORWARD -o $WG_INTERFACE -d $IP -j ACCEPT
-#     echo $IP
-#   fi
-# done
+for IP in ${IPS[@]}; do
+  if [ $MODE == "ALLOW_DENY" ]; then
+    iptables -D FORWARD -i $WG_INTERFACE -s $IP -j DROP
+    iptables -D FORWARD -o $WG_INTERFACE -d $IP -j DROP
+  else
+    iptables -D FORWARD -i $WG_INTERFACE -s $IP -j ACCEPT
+    iptables -D FORWARD -o $WG_INTERFACE -d $IP -j ACCEPT
+  fi
+done
