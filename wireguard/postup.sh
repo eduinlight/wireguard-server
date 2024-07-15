@@ -10,15 +10,15 @@ iptables -A FORWARD -i $OUT_INTERFACE -o $WG_INTERFACE -j ACCEPT
 
 if [ $MODE == "DENY_ALLOW" ]; then
   for IP in ${IPS[@]}; do
-    iptables -A INPUT -i $OUT_INTERFACE -s $IP -j DROP
-    iptables -A OUTPUT -o $OUT_INTERFACE -d $IP -j DROP
+    iptables -A INPUT -i $OUT_INTERFACE -d $IP -j DROP
+    iptables -A OUTPUT -o $OUT_INTERFACE -s $IP -j DROP
   done
   iptables -A INPUT -i $OUT_INTERFACE -j ACCEPT
   iptables -A OUTPUT -o $OUT_INTERFACE -j ACCEPT
 elif [ $MODE == "ALLOW_DENY" ]; then
   for IP in ${IPS[@]}; do
-    iptables -A INPUT -i $OUT_INTERFACE -s $IP -j ACCEPT
-    iptables -A OUTPUT -o $OUT_INTERFACE -d $IP -j ACCEPT
+    iptables -A INPUT -i $OUT_INTERFACE -d $IP -j ACCEPT
+    iptables -A OUTPUT -o $OUT_INTERFACE -s $IP -j ACCEPT
   done
   iptables -A INPUT -i $OUT_INTERFACE -j DROP
   iptables -A OUTPUT -o $OUT_INTERFACE -j DROP
