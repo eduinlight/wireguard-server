@@ -1,12 +1,13 @@
 services:
   wg-easy:
     image: ghcr.io/wg-easy/wg-easy
-    container_name: wg-easy-texy-es-malo
+    container_name: wg-easy
     environment:
-      - WG_HOST=192.168.1.103
-      - PORT=8080
+      - LANG=en
+      - WG_HOST=${WG_EASY_HOST:-192.168.1.103}
+      - PORT=9001
       - WG_PORT=51820
-      - PASSWORD=soy-texy-soy-loca
+      - PASSWORD=${WG_EASY_PASSWORD:-root}
       - WG_POST_UP=/etc/wireguard/postup.sh
       - WG_POST_DOWN=/etc/wireguard/postdown.sh
     restart: unless-stopped
@@ -17,7 +18,7 @@ services:
         ipv4_address: 192.168.1.103
     ports:
       - 51820:51820/udp
-      - 8080:8080/tcp
+      - 9001:9001/tcp
     cap_add:
       - NET_ADMIN
       - SYS_MODULE 
