@@ -6,14 +6,14 @@ source /etc/wireguard/common.sh
 iptables -t nat -A POSTROUTING -s $SUBNET -o $OUT_INTERFACE -j MASQUERADE
 iptables -A INPUT -p udp -m udp --dport $WG_PORT -j ACCEPT
 
-if [ $MODE == "ALLOW_DENY" ]; then
+if [ $MODE == "DENY_ALLOW" ]; then
   for IP in ${IPS[@]}; do
     iptables -A FORWARD -i $WG_INTERFACE -s $IP -j DROP
     iptables -A FORWARD -o $WG_INTERFACE -d $IP -j DROP
   done
   iptables -A FORWARD -i $WG_INTERFACE -j ACCEPT
   iptables -A FORWARD -o $WG_INTERFACE -j ACCEPT
-elif [ $MODE == "DENY_ALLOW" ]; then
+elif [ $MODE == "ALLOW_DENY" ]; then
   for IP in ${IPS[@]}; do
     iptables -A FORWARD -i $WG_INTERFACE -s $IP -j ACCEPT
     iptables -A FORWARD -o $WG_INTERFACE -d $IP -j ACCEPT
