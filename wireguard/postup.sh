@@ -19,11 +19,11 @@ fi
 
 for IP in ${IPS[@]}; do
   if [ $MODE == "ALLOW_DENY" ]; then
-    iptables -A FORWARD -i $WG_INTERFACE -s $IP -j DROP
-    iptables -A FORWARD -o $WG_INTERFACE -d $IP -j DROP
+    iptables -A FORWARD -i $WG_INTERFACE -d $IP -j DROP
+    iptables -A FORWARD -o $WG_INTERFACE -s $IP -j DROP
   else
-    iptables -A FORWARD -i $WG_INTERFACE -s $IP -j ACCEPT
-    iptables -A FORWARD -o $WG_INTERFACE -d $IP -j ACCEPT
+    iptables -A FORWARD -i $WG_INTERFACE -d $IP -j ACCEPT
+    iptables -A FORWARD -o $WG_INTERFACE -s $IP -j ACCEPT
     echo $IP
   fi
 done
