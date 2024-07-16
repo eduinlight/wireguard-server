@@ -17,3 +17,6 @@ acl-up:
 
 acl-down:
 	@./acl-down.sh
+
+list-rules:
+	iptables -vnL DOCKER-USER
