@@ -11,7 +11,7 @@ services:
       - WG_POST_UP=/etc/wireguard/postup.sh
       - WG_POST_DOWN=/etc/wireguard/postdown.sh
       - WG_DEFAULT_DNS=8.8.8.8
-      - ACM_MODE=${ACL_MODE:-DENY_SOME_ALLOW_ALL}
+      - ACL_MODE=${ACL_MODE:-DENY_SOME_ALLOW_ALL}
     restart: unless-stopped
     volumes:
       - ./wireguard:/etc/wireguard
