@@ -8,24 +8,24 @@ iptables -A INPUT -p udp -m udp --dport $WG_PORT -j ACCEPT
 iptables -A FORWARD -i $WG_INTERFACE -o $OUT_INTERFACE -j ACCEPT
 iptables -A FORWARD -i $OUT_INTERFACE -o $WG_INTERFACE -j ACCEPT
 # allow dns
-iptables -A INPUT -d $WG_DEFAULT_DNS -j ACCEPT
-iptables -A INPUT -s $WG_DEFAULT_DNS -j ACCEPT
+iptables -A POSTROUTING -d $WG_DEFAULT_DNS -j ACCEPT
+iptables -A POSTROUTING -s $WG_DEFAULT_DNS -j ACCEPT
 
-if [ $MODE == "DENY_ALLOW" ]; then
+if [ $ACL_MODE == "DENY_SOME_ALLOW_ALL" ]; then
   for IP in ${IPS[@]}; do
-    iptables -A INPUT -i $OUT_INTERFACE -s $IP -j DROP
-    iptables -A OUTPUT -o $OUT_INTERFACE -d $IP -j DROP
+    iptables -A POSTROUTING -i $OUT_INTERFACE -s $IP -j DROP
+    iptables -A POSTROUTING -o $OUT_INTERFACE -d $IP -j DROP
   done
-  iptables -A INPUT -i $OUT_INTERFACE -j ACCEPT
-  iptables -A OUTPUT -o $OUT_INTERFACE -j ACCEPT
-elif [ $MODE == "ALLOW_DENY" ]; then
+  iptables -A POSTROUTING -i $OUT_INTERFACE -j ACCEPT
+  iptables -A POSTROUTING -o $OUT_INTERFACE -j ACCEPT
+elif [ $ACL_MODE == "ALLOW_SOME_DENY_ALL" ]; then
   for IP in ${IPS[@]}; do
-    iptables -A INPUT -i $OUT_INTERFACE -s $IP -j ACCEPT
-    iptables -A OUTPUT -o $OUT_INTERFACE -d $IP -j ACCEPT
+    iptables -A POSTROUTING -i $OUT_INTERFACE -s $IP -j ACCEPT
+    iptables -A POSTROUTING -o $OUT_INTERFACE -d $IP -j ACCEPT
   done
-  iptables -A INPUT -i $OUT_INTERFACE -j DROP
-  iptables -A OUTPUT -o $OUT_INTERFACE -j DROP
+  iptables -A POSTROUTING -i $OUT_INTERFACE -j DROP
+  iptables -A POSTROUTING -o $OUT_INTERFACE -j DROP
 else
-  echo "NOT ALLOWED MODE ${MODE}"
+  echo "NOT ALLOWED ACL_MODE ${ACL_MODE}"
   exit 1
 fi
