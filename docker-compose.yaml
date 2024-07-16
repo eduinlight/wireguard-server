@@ -2,25 +2,17 @@ services:
   wg-easy:
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy
-    environment:
-      - LANG=en
-      - WG_HOST=${WG_EASY_HOST:-192.168.1.103}
-      - PORT=9001
-      - WG_PORT=51820
-      - PASSWORD=${WG_EASY_PASSWORD:-root}
-      - WG_POST_UP=/etc/wireguard/postup.sh
-      - WG_POST_DOWN=/etc/wireguard/postdown.sh
-      - WG_DEFAULT_DNS=8.8.8.8
-      - ACL_MODE=${ACL_MODE:-DENY_SOME_ALLOW_ALL}
+    env_file:
+      - .env
     restart: unless-stopped
     volumes:
       - ./wireguard:/etc/wireguard
     networks:
       wg:
-        ipv4_address: 192.168.1.103
+        ipv4_address: ${WG_CONTAINER_IP}
     ports:
-      - 51820:51820/udp
-      - 9001:9001/tcp
+      - ${WG_PORT}:${WG_PORT}/udp
+      - ${PORT}:${PORT}/tcp
     cap_add:
       - NET_ADMIN
       - SYS_MODULE 
@@ -30,9 +22,9 @@ services:
 
 networks:
   wg:
-    name: wg-easy
+    name: ${WG_CONTAINER_NETWORK_NAME}
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1
+        - subnet: ${WG_CONTAINER_SUBNET}
+          gateway: ${WG_CONTAINER_GATEWAY}
