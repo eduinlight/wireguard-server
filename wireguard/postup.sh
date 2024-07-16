@@ -7,6 +7,9 @@ iptables -t nat -A POSTROUTING -s $SUBNET -o $OUT_INTERFACE -j MASQUERADE
 iptables -A INPUT -p udp -m udp --dport $WG_PORT -j ACCEPT
 iptables -A FORWARD -i $WG_INTERFACE -o $OUT_INTERFACE -j ACCEPT
 iptables -A FORWARD -i $OUT_INTERFACE -o $WG_INTERFACE -j ACCEPT
+# allow dns
+iptables -A INPUT -d $WG_DEFAULT_DNS -j ACCEPT
+iptables -A INPUT -s $WG_DEFAULT_DNS -j ACCEPT
 
 if [ $MODE == "DENY_ALLOW" ]; then
   for IP in ${IPS[@]}; do
