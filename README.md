@@ -1,18 +1,18 @@
 # Wireguard server with Access Control List (ACL)
 
 This repository provide an easy way to create a wireguard server with ACL.
-Is built in top of [wg-easy](https://github.com/wg-easy/wg-easy) to provide an easy way to deny/accept only access to the vpn users to some ips.
+Is built in top of [wg-easy](https://github.com/wg-easy/wg-easy) to provide an easy way to deny/accept only access of vpn users to some ips.
 The ACL can work in two possible modes:
 
-- `ALLOW_SOME_DENY_ALL`: Allow users of the vpn to only access some ips. `Default mode`
-- `DENY_SOME_ALLOW_ALL`: Deny users of the vpn the access to only some ips.
+- `ALLOW_SOME_DENY_ALL`: Allow vpn users the access to _only_ some ips. `Default mode`
+- `DENY_SOME_ALLOW_ALL`: Deny vpn users the access to _only_ some ips.
 
 ## Create the server
 
 1. Copy the distributed environment file `.env.dist` to `.env`.
 2. All needed values to start a wg server are already setted for you.
    Refer to [wg-easy](https://github.com/wg-easy/wg-easy) if you want to customize it more.
-   For a minimum of configuration there are only 2 required variables:
+   For a minimum of configuration there are 2 required variables:
 
 ```BASH
 # wg host example: vpn.example.com
