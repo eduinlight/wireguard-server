@@ -3,26 +3,26 @@
 source ./common.sh
 
 if [ $ACL_MODE == "DENY_SOME_ALLOW_ALL" ]; then
+  # accept all connections
   iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -j ACCEPT
   for IP in ${IPS[@]}; do
-    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -d $IP -j DROP
-    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -s $IP -j DROP
+    # deny connections from this ip
+    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctorigdst $IP -j DROP
   done
 elif [ $ACL_MODE == "ALLOW_SOME_DENY_ALL" ]; then
+  # deny all connections
   iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -j DROP
   for IP in ${IPS[@]}; do
-    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -d $IP -j ACCEPT
-    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -s $IP -j ACCEPT
+    # accept connections from this ip
+    iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctorigdst $IP -j ACCEPT
   done
 else
   echo "NOT ALLOWED ACL_MODE ${ACL_MODE}"
   exit 1
 fi
 
-# allow connection to vpn
-iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -d $WG_CONTAINER_IP -j ACCEPT
-iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -s $WG_CONTAINER_IP -j ACCEPT
-
 # allow dns
-iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -d $WG_DEFAULT_DNS -p udp --dport 53 -j ACCEPT
-iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -s $WG_DEFAULT_DNS -p udp --sport 53 -j ACCEPT
+iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctorigdst $WG_DEFAULT_DNS --ctorigdstport 53 -j ACCEPT
+
+# accept all stablished conections previously accepted
+iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
