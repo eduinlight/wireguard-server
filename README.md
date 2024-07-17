@@ -20,7 +20,7 @@ The ACL can work in two possible modes:
 1. Copy the distributed environment file `.env.dist` to `.env`.
 2. All needed values to start a wg server are already setted for you.
    Refer to [wg-easy](https://github.com/wg-easy/wg-easy) if you want to customize it more.
-   For a minimum of configuration there are 2 required variables:
+   For a minimum of configuration this are the required variables:
 
 ```BASH
 # wg host example: vpn.example.com
@@ -31,8 +31,8 @@ PASSWORD=
 
 3. Change if needed the default `ACL_MODE` variable depending on your use case.
 4. To `allow/deny` some ips edit `ips.sh` file and add them to the `IPS` variable.
-   - For `ACL_MODE=ALLOW_SOME_DENY_ALL` this ips are allowed and the rest is denied.
-   - For `ACL_MODE=DENY_SOME_ALLOW_ALL` this ips are denied and the rest is allowed.
+   - For `ACL_MODE=ALLOW_SOME_DENY_ALL` this ips are allowed and the rest are denied.
+   - For `ACL_MODE=DENY_SOME_ALLOW_ALL` this ips are denied and the rest are allowed.
 5. Start the server: `make up`
 
 ## Stop the server
