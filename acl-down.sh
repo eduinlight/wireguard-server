@@ -26,3 +26,6 @@ iptables -D $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack -
 
 # accept all stablished conections previously accepted
 iptables -D $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# saving changes
+iptables-save
