@@ -25,7 +25,7 @@ PASSWORD=
 4. To `allow/deny` some ips edit `ips.sh` file and add them to the `IPS` variable.
    - For `ACL_MODE=ALLOW_SOME_DENY_ALL` this ips are allowed and the rest is denied.
    - For `ACL_MODE=DENY_SOME_ALLOW_ALL` this ips are denied and the rest is allowed.
-5. Start the saver: `make up`
+5. Start the server: `make up`
 
 ## Stop the server
 
