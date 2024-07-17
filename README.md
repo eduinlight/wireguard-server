@@ -7,6 +7,14 @@ The ACL can work in two possible modes:
 - `ALLOW_SOME_DENY_ALL`: Allow vpn users the access to _only_ some ips. `Default mode`
 - `DENY_SOME_ALLOW_ALL`: Deny vpn users the access to _only_ some ips.
 
+## Prerequisites
+
+- `iptables` and `iptables-persistent` linux packages installed. Tested on `debian`.
+- [docker](https://www.docker.com/)
+- [bash](https://www.gnu.org/software/bash/)
+- [make](https://www.gnu.org/software/make/)
+- Root privileges
+
 ## Create the server
 
 1. Copy the distributed environment file `.env.dist` to `.env`.

@@ -28,4 +28,4 @@ iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack -
 iptables -I $IPTABLES_DOCKER_CHAIN -i $DOCKER_CONTAINER_INTERFACE -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 # saving changes
-iptables-save
+iptables-save > /etc/iptables/rules.v4
