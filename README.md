@@ -37,7 +37,7 @@ PASSWORD=
 
 ## Stop the server
 
-Execute `make down` command to clean the `DOCKER-USER` iptables chain and remove the container and created network.
+Execute `make down` command to clean the `DOCKER-USER` iptables chain and remove the container and network created.
 
 ## Accept all connections
 
